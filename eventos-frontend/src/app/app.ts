@@ -21,8 +21,7 @@ interface Participante {
 })
 export class App {
   participantes: Participante[] = [];
-  
-  // Dados do formulário
+
   nomeCompleto = '';
   cpf = '';
   email = '';
@@ -31,14 +30,7 @@ export class App {
   senha = '';
   confirmarSenha = '';
 
-  constructor(private http: HttpClient) {
-    this.carregarParticipantes();
-  }
-
-  carregarParticipantes() {
-    this.http.get<Participante[]>('http://localhost:3000/participantes')
-      .subscribe(data => this.participantes = data);
-  }
+  constructor(private http: HttpClient) {}
 
   cadastrar() {
     if (this.senha !== this.confirmarSenha) {
@@ -60,21 +52,18 @@ export class App {
       senha: this.senha
     };
 
+    // 🔹 Envia para seu servidor Node.js
     this.http.post('http://localhost:3000/participantes', novoParticipante)
-      .subscribe(() => {
-        this.carregarParticipantes();
-        this.limparFormulario();
-        alert('Cadastro realizado com sucesso!');
+      .subscribe({
+        next: () => {
+          alert('Cadastro realizado com sucesso!');
+          this.limparFormulario();
+        },
+        error: (err) => {
+          console.error('Erro ao cadastrar:', err);
+          alert('Erro ao cadastrar participante.');
+        }
       });
-  }
-
-  remover(id: number | undefined) {
-    if (id && confirm('Deseja realmente remover este participante?')) {
-      this.http.delete(`http://localhost:3000/participantes/${id}`)
-        .subscribe(() => {
-          this.carregarParticipantes();
-        });
-    }
   }
 
   limparFormulario() {
