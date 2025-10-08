@@ -1,0 +1,69 @@
+<div class="login-container">
+  <div class="login-left">
+    <div class="login-content">
+      <div class="logo">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 5L22.5 12.5L20 20L17.5 12.5L20 5Z" fill="#FFD700"/>
+          <path d="M20 5L27.5 7.5L20 10L12.5 7.5L20 5Z" fill="#FFD700"/>
+          <path d="M20 5L22.5 10L25 15L20 12.5L15 15L17.5 10L20 5Z" fill="#FFD700"/>
+        </svg>
+      </div>
+
+      <h1>Bem Vindo</h1>
+      <p class="subtitle">Entre com as informações</p>
+
+      <!-- Mensagem de erro -->
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input 
+            type="email" 
+            id="email" 
+            formControlName="email"
+            placeholder="Digite seu email"
+            [class.error]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="password">Senha</label>
+          <input 
+            type="password" 
+            id="password" 
+            formControlName="password"
+            placeholder="Digite sua senha"
+            [class.error]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+          >
+        </div>
+
+        <div class="form-footer">
+          <label class="remember-me">
+            <input type="checkbox" formControlName="rememberMe">
+            <span>Lembrar por 30 dias</span>
+          </label>
+          <a href="#" class="forgot-password">Esqueceu a senha?</a>
+        </div>
+
+        <button type="submit" class="btn-login" [disabled]="loginForm.invalid || isLoading">
+          {{ isLoading ? 'Entrando...' : 'Log In' }}
+        </button>
+
+        <button type="button" class="btn-register" (click)="onRegister()" [disabled]="isLoading">
+          Cadastre-se
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div class="login-right">
+    <img 
+      src="assets/auth-bg/event-audience.png" 
+      alt="Evento com audiência"
+      class="background-image"
+    >
+  </div>
+</div>
