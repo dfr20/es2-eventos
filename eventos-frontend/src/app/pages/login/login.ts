@@ -26,13 +26,28 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeForm();
-    
+
     // Captura a URL de retorno se existir
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
-    
-    // Se já estiver autenticado, redireciona
+
+    // Verifica se há token e se ele é válido
+    this.checkTokenAndRedirect();
+  }
+
+  private checkTokenAndRedirect(): void {
     if (this.authService.isAuthenticated()) {
-      this.router.navigate([this.returnUrl]);
+      this.isLoading = true;
+      this.authService.validateToken().subscribe({
+        next: (isValid) => {
+          this.isLoading = false;
+          if (isValid) {
+            this.router.navigate([this.returnUrl]);
+          }
+        },
+        error: () => {
+          this.isLoading = false;
+        }
+      });
     }
   }
 

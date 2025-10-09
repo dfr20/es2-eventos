@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, BehaviorSubject, tap } from 'rxjs';
+import { Observable, BehaviorSubject, tap, map, catchError, of } from 'rxjs';
 import { Router } from '@angular/router';
 
 export interface LoginRequest {
@@ -60,7 +60,7 @@ export interface ParticipanteInfo {
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly API_URL = 'http://localhost:8080';
+  private readonly API_URL = 'http://localhost:8089';
   private readonly TOKEN_KEY = 'auth_token';
   private tokenSubject = new BehaviorSubject<string | null>(this.getToken());
   public token$ = this.tokenSubject.asObservable();
@@ -122,6 +122,23 @@ export class AuthService {
 
   isAuthenticated(): boolean {
     return !!this.getToken();
+  }
+
+  validateToken(): Observable<boolean> {
+    const token = this.getToken();
+    if (!token) {
+      return of(false);
+    }
+
+    return this.http.get<ParticipanteInfo>(`${this.API_URL}/participantes/me`, {
+      headers: this.getAuthHeaders()
+    }).pipe(
+      map(() => true),
+      catchError(() => {
+        this.logout();
+        return of(false);
+      })
+    );
   }
 
   private getAuthHeaders(): HttpHeaders {

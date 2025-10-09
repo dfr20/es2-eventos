@@ -118,6 +118,17 @@ select:focus {
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
+.error-message {
+  background-color: #ff4d4d;
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+
 .btn-cadastrar:hover:not(:disabled) {
   transform: translateY(-2px);
   box-shadow: 0 10px 25px rgba(139, 92, 246, 0.4);

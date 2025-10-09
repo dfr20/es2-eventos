@@ -1,7 +1,19 @@
 <div class="page-wrapper">
   <div class="container">
     <h1>Cadastro de Participante</h1>
+
     <div class="form-card">
+
+      <!-- Mensagens de status -->
+      <div *ngIf="isLoading" class="loading-message">
+        Cadastrando, aguarde...
+      </div>
+
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+
+      <!-- Formulário -->
       <form>
         <div class="form-row">
           <div class="form-group">
@@ -13,6 +25,7 @@
             <input type="email" [(ngModel)]="email" name="email" placeholder="seu@email.com">
           </div>
         </div>
+
         <div class="form-row">
           <div class="form-group">
             <label>Telefone</label>
@@ -23,6 +36,7 @@
             <input type="date" [(ngModel)]="dataNascimento" name="data">
           </div>
         </div>
+
         <div class="form-row">
           <div class="form-group">
             <label>CEP</label>
@@ -35,6 +49,7 @@
             <input type="text" [(ngModel)]="nro_casa" name="nro_casa" placeholder="Número">
           </div>
         </div>
+
         <div class="form-row">
           <div class="form-group">
             <label>Logradouro</label>
@@ -45,6 +60,7 @@
             <input type="text" [(ngModel)]="endereco.localidade" name="localidade" placeholder="Localidade">
           </div>
         </div>
+
         <div class="form-row">
           <div class="form-group">
             <label>Estado</label>
@@ -55,6 +71,7 @@
             <input type="text" [(ngModel)]="endereco.bairro" name="bairro" placeholder="Bairro">
           </div>
         </div>
+
         <div class="form-row">
           <div class="form-group">
             <label>Tipo de Participante</label>
@@ -63,6 +80,7 @@
             </select>
           </div>
         </div>
+
         <div class="form-row">
           <div class="form-group">
             <label>Senha</label>
@@ -73,11 +91,13 @@
             <input type="password" [(ngModel)]="confirmarSenha" name="confirmar" placeholder="Confirme sua senha">
           </div>
         </div>
+
         <button type="button" (click)="cadastrar()" class="btn-cadastrar">Cadastrar</button>
       </form>
 
       <p style="text-align:center; margin-top:20px; color: white;">
-        Já tem conta? <a routerLink="/login" style="color:#a78bfa;">Entrar</a>
+        Já tem conta?
+        <a routerLink="/login" style="color:#a78bfa;">Entrar</a>
       </p>
     </div>
   </div>

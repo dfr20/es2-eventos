@@ -30,7 +30,8 @@ export class CadastroParticipanteComponent {
   tipoParticipante = { id: 1, nome: 'Aluno' };
   tipoOptions = [
     { id: 1, nome: 'Aluno' },
-    { id: 2, nome: 'Administrador' }
+    { id: 2, nome: 'Professor' },
+    { id: 3, nome: 'Pesquisador' },
   ];
   isLoading = false;
   errorMessage = '';
