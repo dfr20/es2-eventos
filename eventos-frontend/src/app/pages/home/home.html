@@ -1,0 +1,32 @@
+<div class="home-container">
+  <header class="header">
+    <h1>Gestão de Eventos</h1>
+    <div class="user-info">
+      <span *ngIf="participante">Olá, {{ participante.nome }}</span>
+      <button (click)="logout()" class="btn-logout">Sair</button>
+    </div>
+  </header>
+
+  <main class="content">
+    <div *ngIf="participante" class="welcome-card">
+      <h2>Bem-vindo(a), {{ participante.nome }}!</h2>
+      <p>Email: {{ participante.email }}</p>
+      <p>Telefone: {{ participante.telefone }}</p>
+      <p *ngIf="participante.tipoParticipante">
+        Tipo: {{ participante.tipoParticipante.nome }}
+      </p>
+    </div>
+
+    <div class="actions">
+      <button class="action-card" (click)="navigateTo('/eventos')">
+        <h3>Eventos</h3>
+        <p>Ver e gerenciar eventos</p>
+      </button>
+      
+      <button class="action-card" (click)="navigateTo('/perfil')">
+        <h3>Meu Perfil</h3>
+        <p>Editar informações pessoais</p>
+      </button>
+    </div>
+  </main>
+</div>

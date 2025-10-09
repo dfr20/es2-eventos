@@ -72,6 +72,8 @@ export class AuthService {
 
   cadastrar(dados: CadastroRequest): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.API_URL}/auth/registro`, dados)
+    //O .pipe() é usado para encadear operadores do RxJS sobre a resposta da requisição.
+    //O operador tap() serve para executar uma ação colateral, sem alterar a resposta.
       .pipe(
         tap(response => {
           if (response.token) {

@@ -68,12 +68,10 @@ export class LoginComponent implements OnInit {
       
       this.authService.login(email, password).subscribe({
         next: (response) => {
-          console.log('Login realizado com sucesso!');
           this.router.navigate([this.returnUrl]);
         },
         error: (error) => {
           this.isLoading = false;
-          console.error('Erro ao fazer login:', error);
           
           if (error.status === 401) {
             this.errorMessage = 'Email ou senha inválidos';

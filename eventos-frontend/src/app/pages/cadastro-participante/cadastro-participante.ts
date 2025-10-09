@@ -97,19 +97,14 @@ export class CadastroParticipanteComponent {
       nro_casa: this.nro_casa
     };
 
-    console.log('Dados sendo enviados para API:', JSON.stringify(cadastroData, null, 2));
-
     this.authService.cadastrar(cadastroData).subscribe({
       next: (response) => {
-        console.log('Cadastro realizado com sucesso!');
         alert(`Cadastro realizado com sucesso!\nBem-vindo(a), ${this.nomeCompleto}`);
         // Redireciona para home já autenticado (token foi salvo automaticamente)
         this.router.navigate(['/home']);
       },
       error: (error) => {
         this.isLoading = false;
-        console.error('Erro ao cadastrar:', error);
-        console.error('Detalhes do erro:', error.error);
 
         if (error.status === 400) {
           const errorMsg = error.error?.message || error.error?.error || 'Dados inválidos. Verifique as informações.';
@@ -161,7 +156,6 @@ export class CadastroParticipanteComponent {
         this.endereco.cep = cleaned;
       },
       error: (err) => {
-        console.error('Erro ao consultar CEP', err);
         alert('Erro ao consultar CEP');
       }
     });
